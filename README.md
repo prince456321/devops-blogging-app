@@ -66,7 +66,7 @@ The project includes:
 
 ## Architecture
 
-![Architecture](docs/architecture.png)
+![Architecture](docs/architecture.jpeg)
 
 ### Architecture Explanation
 
