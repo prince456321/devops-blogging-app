@@ -30,8 +30,13 @@ docker pull $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$IMAGE_TAG
 docker stop blogging-app || true
 docker rm blogging-app || true
 
+
 docker run -d \
---name blogging-app \
--p $APP_PORT:$CONTAINER_PORT \
---restart always \
-$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$IMAGE_TAG
+  --name blogging-app \
+  -p $APP_PORT:$CONTAINER_PORT \
+  --restart always \
+  --log-driver=awslogs \
+  --log-opt awslogs-region=$REGION \
+  --log-opt awslogs-group=blogging-app-logs \
+  --log-opt awslogs-stream=blogging-app \
+  $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$IMAGE_TAG
