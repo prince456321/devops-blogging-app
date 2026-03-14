@@ -51,46 +51,22 @@ The project includes:
 
 ---
 
+## Key DevOps Features
+
+- Infrastructure fully provisioned using **Terraform**
+- Automated **CI/CD pipeline** with GitHub Actions
+- Docker image build and push to **Amazon ECR**
+- Automatic deployment to **EC2 instances**
+- **Auto Scaling Group** for high availability
+- **Application Load Balancer** for traffic distribution
+- Centralized logging using **CloudWatch Logs**
+- **CloudWatch CPU alarms** for monitoring and alerting
+
+---
+
 ## Architecture
 
-```mermaid
-flowchart TD
-
-User[User Browser]
-
-ALB[Application Load Balancer]
-
-ASG[Auto Scaling Group]
-
-EC2[EC2 Instances]
-
-Docker[Docker Container]
-
-App[Spring Boot Application]
-
-ECR[Amazon ECR]
-
-GitHub[GitHub Repository]
-
-Actions[GitHub Actions CI/CD]
-
-CWLogs[CloudWatch Logs]
-
-CWAlarm[CloudWatch CPU Alarm]
-
-User --> ALB
-ALB --> ASG
-ASG --> EC2
-EC2 --> Docker
-Docker --> App
-
-GitHub --> Actions
-Actions --> ECR
-ECR --> EC2
-
-App --> CWLogs
-EC2 --> CWAlarm
-```
+![Architecture](docs/architecture.png)
 
 ### Architecture Explanation
 
