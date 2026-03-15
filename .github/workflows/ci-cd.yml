@@ -80,7 +80,8 @@ jobs:
     needs: build
 
     env:
-      AWS_REGION: us-east-1 ASG_NAME: blogging-app-asg
+      AWS_REGION: us-east-1 
+      ASG_NAME: blogging-app-asg
 
     steps:
       - name: Configure AWS credentials
