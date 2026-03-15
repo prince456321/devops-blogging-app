@@ -14,6 +14,7 @@ jobs:
       ECR_REPOSITORY: twitter-repo
       AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       IMAGE_TAG: ${{ github.sha }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
       - name: Checkout code
@@ -27,6 +28,9 @@ jobs:
 
       - name: Build application
         run: mvn clean package -DskipTests
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -48,6 +52,14 @@ jobs:
           -t $ECR_REPOSITORY:$IMAGE_TAG \
           -f docker/Dockerfile .
 
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: $ECR_REPOSITORY:$IMAGE_TAG
+          format: table
+          exit-code: 0
+          ignore-unfixed: true
+
       - name: Tag Docker image
         run: |
           docker tag $ECR_REPOSITORY:latest \
@@ -68,8 +80,7 @@ jobs:
     needs: build
 
     env:
-      AWS_REGION: us-east-1
-      ASG_NAME: blogging-app-asg
+      AWS_REGION: us-east-1 ASG_NAME: blogging-app-asg
 
     steps:
       - name: Configure AWS credentials
