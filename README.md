@@ -66,7 +66,7 @@ The project includes:
 
 ## Architecture
 
-![Architecture](docs/architecture.jpeg)
+![Architecture](docs/diagramAWS.jpeg)
 
 ### Architecture Explanation
 
