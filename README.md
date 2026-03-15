@@ -70,17 +70,17 @@ The project includes:
 
 ### Architecture Explanation
 
-User traffic is first routed through an **Application Load Balancer (ALB)** which distributes incoming requests across multiple EC2 instances.  
+User traffic is first routed through an **Application Load Balancer (ALB)** which distributes incoming requests across multiple EC2 instances.
 These instances are managed by an **Auto Scaling Group (ASG)** that automatically adjusts the number of running instances depending on the system load and health status.
 
 Each EC2 instance runs a **Docker container** hosting the **Spring Boot application**, ensuring consistent and portable deployments.
 
-The **CI/CD pipeline** is implemented using **GitHub Actions**.  
+The **CI/CD pipeline** is implemented using **GitHub Actions**.
 Whenever code is pushed to the GitHub repository, the pipeline automatically builds a Docker image and pushes it to **Amazon Elastic Container Registry (ECR)**.
 
 During deployment, EC2 instances pull the latest container image from **Amazon ECR** and start the updated application container.
 
-For monitoring and observability, **CloudWatch Logs** collect application logs from the running containers, while **CloudWatch CPU alarms** monitor instance utilization and trigger alerts when predefined thresholds are exceeded.
+For monitoring and observability, **CloudWatch Logs** collect application logs from the running containers, while **CloudWatch CPU alarms** monitor instance utilization and trigger alerts when predefined thresholds are exceeded.        
 
 
 ---
@@ -97,7 +97,7 @@ Steps:
 4. Deploy new version
 5. Refresh Auto Scaling Group instances
 
-![Pipeline](docs/pipeline.png)
+![Pipeline](docs/pipelineDiagram.jpeg)
 
 ---
 
@@ -148,6 +148,9 @@ CloudWatch alarm configured for high CPU usage.
 
 ---
 
+![Blogging-app Dashboard](docs/dashboard.png)
+
+
 ## How to Reproduce
 
 Clone the repository:
@@ -164,3 +167,5 @@ Push changes to trigger the CI/CD Pipeline
 git add .
 git commit -m "update"
 git push origin main
+
+
