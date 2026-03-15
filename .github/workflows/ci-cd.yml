@@ -28,11 +28,15 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Build application and run SonarCloud
-        run: mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
-          -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
-      -Dsonar.host.url=https://sonarcloud.io
+      - name: Build application
+        run: mvn clean verify
+
+      - name: Run SonarCloud
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=https://sonarcloud.io
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
