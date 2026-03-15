@@ -153,8 +153,185 @@ CloudWatch alarm configured for high CPU usage.
 
 ## How to Reproduce
 
+---
+
+## Configuration Required
+
+Before reproducing this project, some values must be replaced with your own AWS and SonarCloud configuration.
+This ensures that the infrastructure and CI/CD pipeline run correctly in your own AWS account.
+
+---
+
+## AWS Account ID
+
+Replace the AWS Account ID anywhere you see an ECR URL like:
+
+123456789012.dkr.ecr.us-east-1.amazonaws.com
+
+Replace `123456789012` with **your own AWS Account ID**.
+
+This value is used in:
+
+- GitHub Actions workflow
+- Docker image push commands
+- ECR login commands
+
+You can find your AWS Account ID in the AWS console.
+
+---
+
+## AWS Region
+
+The default region used in this project is:
+
+us-east-1
+
+If you want to deploy in another region, you can replace it with something like:
+
+eu-central-1
+
+Make sure the region you choose matches the region where your AWS resources are created.
+
+---
+
+## ECR Repository
+
+The pipeline pushes Docker images to Amazon ECR.
+
+The default repository name used in this project is:
+
+twitter-repo
+
+Before running the pipeline, create the repository in AWS:
+
+aws ecr create-repository --repository-name twitter-repo
+
+If you use another repository name, update the value in the GitHub Actions workflow.
+
+---
+
+## SonarCloud Configuration
+
+This project uses **SonarCloud** for code quality analysis.
+
+You must replace the following values with your own SonarCloud configuration.
+
+### Sonar Project Key
+
+Example value used in this project:
+
+prince456321_devops-blogging-app
+
+Replace it with your own SonarCloud project key.
+
+---
+
+### Sonar Organization
+
+Example value used in this project:
+
+princesonarqube
+
+Replace it with your own SonarCloud organization name.
+
+---
+
+## Terraform Backend Configuration
+
+Terraform remote state is stored using:
+
+- Amazon **S3** (for the Terraform state file)
+- **DynamoDB** (for state locking)
+
+You must create these resources in your AWS account.
+
+Example resources:
+
+S3 Bucket: terraform-state-bucket
+DynamoDB Table: terraform-lock-table
+
+These resources prevent:
+
+- Terraform state corruption
+- concurrent Terraform execution
+- infrastructure conflicts
+
+---
+
+## GitHub Secrets
+
+The CI/CD pipeline requires several GitHub secrets.
+
+Add them in your repository settings:
+
+Repository â†’ Settings â†’ Secrets and variables â†’ Actions
+
+Create the following secrets:
+
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_ACCOUNT_ID
+SONAR_TOKEN
+
+These secrets are used by GitHub Actions to:
+
+- authenticate with AWS
+- push Docker images to Amazon ECR
+- run SonarCloud analysis
+
+---
+
+## Required AWS Resources
+
+Before running the project, make sure the following resources exist:
+
+- Amazon **ECR Repository**
+- **S3 bucket** for Terraform state
+- **DynamoDB table** for Terraform state locking
+- **SonarCloud project**
+- **SonarCloud token**
+- **GitHub secrets**
+
+---
+
+## Important Notes
+
+This project was designed to be **reproducible in any AWS account**.
+
+However, the following values **must always be replaced** with your own configuration:
+
+- AWS Account ID
+- AWS Region (optional)
+- ECR repository name
+- SonarCloud project key
+- SonarCloud organization
+- Terraform backend resources
+- GitHub Secrets
+
+---
+
+## Documentation
+
+Detailed documentation explaining how to reproduce the entire project is available in the PDF guide below.
+
+- í³˜ *Project Setup Guide*
+
+![Download PDF](docs/devops_project_reproduction_guide.pdf)
+
+This document contains:
+
+- prerequisites
+- AWS configuration
+- Terraform backend setup
+- GitHub secrets configuration
+- SonarCloud setup
+- CI/CD pipeline execution
+- deployment steps
+
+---
 Clone the repository:
 https://github.com/prince456321/devops-blogging-app.git
+
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/devops-blogging-app.git
@@ -167,5 +344,7 @@ Push changes to trigger the CI/CD Pipeline
 git add .
 git commit -m "update"
 git push origin main
+---
+
 
 
