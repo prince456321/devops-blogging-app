@@ -231,7 +231,7 @@ git push origin main
 
 Full setup guide available:
 
-- `docs/devops_project_reproduction_guide.pdf`
+- ![](docs/devops_project_reproduction_guide.pdf)
 
 ---
 
