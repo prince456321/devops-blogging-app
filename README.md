@@ -189,19 +189,44 @@ cd devops-blogging-app
 
 Create the following resources in AWS:
 
-- S3 bucket for Terraform state
-- DynamoDB table for state locking
+### ‚ö†Ô∏è Terraform Backend Prerequisites
 
-**Example:**
+Before running Terraform, you must create the remote backend resources manually.
 
-- S3 Bucket: `terraform-state-bucket`
-- DynamoDB Table: `terraform-lock-table`
+Terraform uses:
+- S3 bucket ‚Üí to store the state file
+- DynamoDB table ‚Üí to manage state locking
+
+---
+
+### Ì¥π Create S3 Bucket
+
+Create an S3 bucket for Terraform state:
+
+Example:
+- Bucket name: `terraform-state-bucket`
+
+---
+
+### Ì¥π Create DynamoDB Table
+
+Create a DynamoDB table with the following configuration:
+
+- Table name: `terraform-state-lock`
+- Partition key: `LockID` (String)
+- Billing mode: On-demand (default)
+
+---
+
+Ì±â These resources are required before running:
+
+```bash
 
 ### 3. Initialize Terraform
 
-```bash
 terraform init
 terraform apply
+
 ```
 
 ### 4. Configure GitHub Secrets
